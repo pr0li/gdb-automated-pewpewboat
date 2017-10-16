@@ -1,4 +1,4 @@
-# Flare-on 2017 pewpewboat automatic debug script
+# gdb automated debugging: 2017 flare-on's pewpewboat
 
 Here's a script to automatically debug Fire Eye's Flare-on challenge #5: pewpewboat.
 There are 10 levels to be played, but I wanted to automate the process in case there were *n* levels, where *n* is too big.
