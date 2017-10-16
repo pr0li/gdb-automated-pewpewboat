@@ -1,0 +1,46 @@
+set disassembly-flavor intel
+source boat_coords.py
+b *0x40373e
+b *0x403ea9
+
+
+define patch_hash
+	set $leng = 32
+	set $i = 0
+	set $stri = $get_hash()
+	
+	while $i < $leng
+		set {char}($rbp-0x110 + $i) = $stri[$i]
+		set $i = $i + 1
+	end
+end
+
+
+define play_game
+	set $max = 10
+	set $level = $get_level()
+
+	while $level < $max
+		python-interactive write_coords_to_file('coordinates.txt')
+		python-interactive write_level_to_file('coordinates.txt', GetLevel.invoke(GetLevel))
+		continue
+		
+		patch_hash
+		continue
+		
+		set $level = $get_level()
+	end
+	
+	continue
+end
+
+
+define create_empty_input_file
+	python-interactive empty_file('coordinates.txt')
+end
+
+
+
+create_empty_input_file
+run < coordinates.txt
+play_game
